@@ -5,21 +5,82 @@
   <title>24Spare Sales Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background:#121212; color:#f0f0f0; }
-    h1,h2 { color:#ffb74d; }
-    .container { display:flex; flex-wrap:wrap; gap:20px; }
-    .panel { background:#1f1f1f; padding:15px; border-radius:8px; flex:1 1 450px; min-width:300px; }
-    table { width:100%; border-collapse:collapse; margin-top:10px; }
-    th,td { border:1px solid #333; padding:6px; font-size:13px; }
-    th { background:#263238; }
-    input { width:100%; box-sizing:border-box; background:#111; border:1px solid #555; color:#fff; padding:3px; }
-    button { background:#ffb74d; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; margin-top:10px; }
-    button:hover { background:#ffa726; }
-    canvas { background:#0d0d0d; border-radius:6px; padding:6px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background:#f5f7fb;
+      color:#1f2933;
+    }
+    h1 {
+      color:#1f2933;
+    }
+    h2 {
+      color:#2563eb;
+    }
+    .container {
+      display:flex;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+    .panel {
+      background:#ffffff;
+      padding:15px;
+      border-radius:10px;
+      box-shadow:0 8px 18px rgba(15,23,42,0.08);
+      flex:1 1 450px;
+      min-width:300px;
+      border:1px solid #e5e7eb;
+    }
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+    }
+    th,td {
+      border:1px solid #e5e7eb;
+      padding:6px;
+      font-size:13px;
+    }
+    th {
+      background:#f3f4f6;
+      color:#374151;
+    }
+    input {
+      width:100%;
+      box-sizing:border-box;
+      background:#f9fafb;
+      border:1px solid #d1d5db;
+      color:#111827;
+      padding:4px 6px;
+      border-radius:4px;
+    }
+    input:focus {
+      outline:none;
+      border-color:#2563eb;
+      box-shadow:0 0 0 1px rgba(37,99,235,0.25);
+    }
+    button {
+      background:#2563eb;
+      color:#ffffff;
+      border:none;
+      padding:9px 16px;
+      border-radius:6px;
+      cursor:pointer;
+      margin-top:10px;
+      font-weight:600;
+    }
+    button:hover {
+      background:#1d4ed8;
+    }
+    canvas {
+      background:#ffffff;
+      border-radius:8px;
+    }
   </style>
 </head>
 <body>
   <h1>24Spare Dashboard</h1>
+
   <!-- UPDATE SECTION -->
   <div class="container">
     <!-- Sales by Category -->
@@ -34,7 +95,7 @@
       </table>
     </div>
 
-    <!-- Agent Performance (fully editable) -->
+    <!-- Agent Performance -->
     <div class="panel">
       <h2>Agent Performance</h2>
       <table id="tblAgents">
@@ -71,7 +132,7 @@
       </table>
     </div>
 
-    <!-- Product Inventory (fully editable) -->
+    <!-- Product Inventory -->
     <div class="panel">
       <h2>Product Inventory Status</h2>
       <table id="tblInventory">
@@ -206,10 +267,10 @@
           labels: cat.labels,
           datasets: [{
             data: cat.data,
-            backgroundColor: ['#42a5f5','#26a69a','#ffb74d','#ef5350']
+            backgroundColor: ['#2563eb','#10b981','#f97316','#ef4444']
           }]
         },
-        options: { plugins:{legend:{labels:{color:'#fff'}}} }
+        options: { plugins:{legend:{labels:{color:'#374151'}}} }
       });
 
       // Agent Sales chart
@@ -221,15 +282,15 @@
           datasets: [{
             label: 'Total Sales (₹)',
             data: ag.sales,
-            backgroundColor: '#42a5f5'
+            backgroundColor: '#2563eb'
           }]
         },
         options: {
           scales: {
-            x: { ticks:{color:'#fff'} },
-            y: { ticks:{color:'#fff'} }
+            x: { ticks:{color:'#4b5563'} },
+            y: { ticks:{color:'#4b5563'} }
           },
-          plugins:{legend:{labels:{color:'#fff'}}}
+          plugins:{legend:{labels:{color:'#374151'}}}
         }
       });
 
@@ -246,15 +307,15 @@
           datasets: [{
             label: 'Achievement %',
             data: achievement,
-            backgroundColor: '#ffb74d'
+            backgroundColor: '#f97316'
           }]
         },
         options: {
           scales: {
-            x: { ticks:{color:'#fff'} },
-            y: { ticks:{color:'#fff'} }
+            x: { ticks:{color:'#4b5563'} },
+            y: { ticks:{color:'#4b5563'} }
           },
-          plugins:{legend:{labels:{color:'#fff'}}}
+          plugins:{legend:{labels:{color:'#374151'}}}
         }
       });
 
@@ -267,15 +328,15 @@
           datasets: [{
             label: 'Stock Qty',
             data: inv.qty,
-            backgroundColor: '#26a69a'
+            backgroundColor: '#10b981'
           }]
         },
         options: {
           scales: {
-            x: { ticks:{color:'#fff'}, ticks:{autoSkip:false, maxRotation:60, minRotation:30} },
-            y: { ticks:{color:'#fff'} }
+            x: { ticks:{color:'#4b5563', autoSkip:false, maxRotation:60, minRotation:30} },
+            y: { ticks:{color:'#4b5563'} }
           },
-          plugins:{legend:{labels:{color:'#fff'}}}
+          plugins:{legend:{labels:{color:'#374151'}}}
         }
       });
     }
@@ -285,4 +346,3 @@
   </script>
 </body>
 </html>
-
