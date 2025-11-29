@@ -81,124 +81,8 @@
 <body>
   <h1>24Spare Dashboard</h1>
 
-  <!-- UPDATE SECTION -->
-  <div class="container">
-    <!-- Sales by Category -->
-    <div class="panel">
-      <h2>Sales by Category (₹)</h2>
-      <table id="tblSalesCat">
-        <tr><th>Category</th><th>Sales Amount</th></tr>
-        <tr><td>Engine Oil</td><td><input type="number" value="68400" /></td></tr>
-        <tr><td>Coolant</td><td><input type="number" value="13400" /></td></tr>
-        <tr><td>Gear Oil</td><td><input type="number" value="29800" /></td></tr>
-        <tr><td>New Parts</td><td><input type="number" value="153000" /></td></tr>
-      </table>
-    </div>
-
-    <!-- Agent Performance -->
-    <div class="panel">
-      <h2>Agent Performance</h2>
-      <table id="tblAgents">
-        <tr>
-          <th>Agent Name</th>
-          <th>Total Sales (₹)</th>
-          <th>No. of Transactions</th>
-          <th>Target (₹)</th>
-        </tr>
-        <tr>
-          <td><input value="Rajesh Kumar" /></td>
-          <td><input type="number" value="88300" /></td>
-          <td><input type="number" value="4" /></td>
-          <td><input type="number" value="80000" /></td>
-        </tr>
-        <tr>
-          <td><input value="Priya Singh" /></td>
-          <td><input type="number" value="69800" /></td>
-          <td><input type="number" value="3" /></td>
-          <td><input type="number" value="80000" /></td>
-        </tr>
-        <tr>
-          <td><input value="Amit Patel" /></td>
-          <td><input type="number" value="64000" /></td>
-          <td><input type="number" value="3" /></td>
-          <td><input type="number" value="80000" /></td>
-        </tr>
-        <tr>
-          <td><input value="Vikram Singh" /></td>
-          <td><input type="number" value="42500" /></td>
-          <td><input type="number" value="2" /></td>
-          <td><input type="number" value="80000" /></td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- Product Inventory -->
-    <div class="panel">
-      <h2>Product Inventory Status</h2>
-      <table id="tblInventory">
-        <tr>
-          <th>Product Name</th>
-          <th>Category</th>
-          <th>Stock Qty</th>
-        </tr>
-        <tr>
-          <td><input value="Synthetic 10W-40" /></td>
-          <td><input value="Engine Oil" /></td>
-          <td><input type="number" value="200" /></td>
-        </tr>
-        <tr>
-          <td><input value="Semi-Synthetic 15W-40" /></td>
-          <td><input value="Engine Oil" /></td>
-          <td><input type="number" value="150" /></td>
-        </tr>
-        <tr>
-          <td><input value="Synthetic 5W-30" /></td>
-          <td><input value="Engine Oil" /></td>
-          <td><input type="number" value="100" /></td>
-        </tr>
-        <tr>
-          <td><input value="Premium Red Coolant" /></td>
-          <td><input value="Coolant" /></td>
-          <td><input type="number" value="120" /></td>
-        </tr>
-        <tr>
-          <td><input value="Standard Blue Coolant" /></td>
-          <td><input value="Coolant" /></td>
-          <td><input type="number" value="180" /></td>
-        </tr>
-        <tr>
-          <td><input value="ATF Transmission Oil" /></td>
-          <td><input value="Gear Oil" /></td>
-          <td><input type="number" value="95" /></td>
-        </tr>
-        <tr>
-          <td><input value="Gear Oil 90" /></td>
-          <td><input value="Gear Oil" /></td>
-          <td><input type="number" value="140" /></td>
-        </tr>
-        <tr>
-          <td><input value="Air Filter" /></td>
-          <td><input value="New Parts" /></td>
-          <td><input type="number" value="300" /></td>
-        </tr>
-        <tr>
-          <td><input value="Spark Plugs" /></td>
-          <td><input value="New Parts" /></td>
-          <td><input type="number" value="250" /></td>
-        </tr>
-        <tr>
-          <td><input value="Battery 12V" /></td>
-          <td><input value="New Parts" /></td>
-          <td><input type="number" value="60" /></td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <button onclick="updateDashboard()">Update Dashboard</button>
-
-  <!-- CHARTS SECTION -->
-  <div class="container" style="margin-top:20px;">
+  <!-- DASHBOARD (CHARTS FIRST) -->
+  <div class="container" style="margin-top:10px;">
     <div class="panel">
       <h2>Sales by Category</h2>
       <canvas id="catChart" height="220"></canvas>
@@ -217,132 +101,27 @@
     </div>
   </div>
 
-  <script>
-    let catChart, agentChart, targetChart, invChart;
+  <!-- UPDATE SECTION (AT END) -->
+  <h2 style="margin-top:30px;">Update Data</h2>
+  <p>Edit values below and click <b>Update Dashboard</b> to refresh charts.</p>
 
-    function getSalesByCategory() {
-      const table = document.getElementById('tblSalesCat');
-      const labels = [], data = [];
-      for (let i = 1; i < table.rows.length; i++) {
-        const cells = table.rows[i].cells;
-        labels.push(cells[0].innerText);
-        data.push(parseFloat(cells[1].querySelector('input').value) || 0);
-      }
-      return { labels, data };
-    }
+  <div class="container">
+    <!-- Sales by Category -->
+    <div class="panel">
+      <h3>Sales by Category (₹)</h3>
+      <table id="tblSalesCat">
+        <tr><th>Category</th><th>Sales Amount</th></tr>
+        <tr><td>Engine Oil</td><td><input type="number" value="68400" /></td></tr>
+        <tr><td>Coolant</td><td><input type="number" value="13400" /></td></tr>
+        <tr><td>Gear Oil</td><td><input type="number" value="29800" /></td></tr>
+        <tr><td>New Parts</td><td><input type="number" value="153000" /></td></tr>
+      </table>
+    </div>
 
-    function getAgentData() {
-      const table = document.getElementById('tblAgents');
-      const names = [], sales = [], targets = [];
-      for (let i = 1; i < table.rows.length; i++) {
-        const cells = table.rows[i].cells;
-        names.push(cells[0].querySelector('input').value || '');
-        sales.push(parseFloat(cells[1].querySelector('input').value) || 0);
-        targets.push(parseFloat(cells[3].querySelector('input').value) || 0);
-      }
-      return { names, sales, targets };
-    }
-
-    function getInventoryData() {
-      const table = document.getElementById('tblInventory');
-      const labels = [], qty = [];
-      for (let i = 1; i < table.rows.length; i++) {
-        const cells = table.rows[i].cells;
-        labels.push(cells[0].querySelector('input').value || '');
-        qty.push(parseFloat(cells[2].querySelector('input').value) || 0);
-      }
-      return { labels, qty };
-    }
-
-    function updateDashboard() {
-      const cat = getSalesByCategory();
-      const ag  = getAgentData();
-      const inv = getInventoryData();
-
-      // Sales by Category chart
-      if (catChart) catChart.destroy();
-      catChart = new Chart(document.getElementById('catChart'), {
-        type: 'pie',
-        data: {
-          labels: cat.labels,
-          datasets: [{
-            data: cat.data,
-            backgroundColor: ['#2563eb','#10b981','#f97316','#ef4444']
-          }]
-        },
-        options: { plugins:{legend:{labels:{color:'#374151'}}} }
-      });
-
-      // Agent Sales chart
-      if (agentChart) agentChart.destroy();
-      agentChart = new Chart(document.getElementById('agentChart'), {
-        type: 'bar',
-        data: {
-          labels: ag.names,
-          datasets: [{
-            label: 'Total Sales (₹)',
-            data: ag.sales,
-            backgroundColor: '#2563eb'
-          }]
-        },
-        options: {
-          scales: {
-            x: { ticks:{color:'#4b5563'} },
-            y: { ticks:{color:'#4b5563'} }
-          },
-          plugins:{legend:{labels:{color:'#374151'}}}
-        }
-      });
-
-      // Agent Target Achievement %
-      const achievement = ag.sales.map((s, i) => {
-        const t = ag.targets[i] || 1;
-        return Math.round((s / t) * 100);
-      });
-      if (targetChart) targetChart.destroy();
-      targetChart = new Chart(document.getElementById('targetChart'), {
-        type: 'bar',
-        data: {
-          labels: ag.names,
-          datasets: [{
-            label: 'Achievement %',
-            data: achievement,
-            backgroundColor: '#f97316'
-          }]
-        },
-        options: {
-          scales: {
-            x: { ticks:{color:'#4b5563'} },
-            y: { ticks:{color:'#4b5563'} }
-          },
-          plugins:{legend:{labels:{color:'#374151'}}}
-        }
-      });
-
-      // Inventory chart
-      if (invChart) invChart.destroy();
-      invChart = new Chart(document.getElementById('invChart'), {
-        type: 'bar',
-        data: {
-          labels: inv.labels,
-          datasets: [{
-            label: 'Stock Qty',
-            data: inv.qty,
-            backgroundColor: '#10b981'
-          }]
-        },
-        options: {
-          scales: {
-            x: { ticks:{color:'#4b5563', autoSkip:false, maxRotation:60, minRotation:30} },
-            y: { ticks:{color:'#4b5563'} }
-          },
-          plugins:{legend:{labels:{color:'#374151'}}}
-        }
-      });
-    }
-
-    // initial draw
-    updateDashboard();
-  </script>
-</body>
-</html>
+    <!-- Agent Performance -->
+    <div class="panel">
+      <h3>Agent Performance</h3>
+      <table id="tblAgents">
+        <tr>
+          <th>Agent Name</th>
+          <th>Total Sales
