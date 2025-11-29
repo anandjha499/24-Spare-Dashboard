@@ -2,90 +2,149 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>24Spare Sales Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background:#f5f7fb;
-      color:#1f2933;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fb 0%, #c3cfe2 100%);
+      color: #1f2933;
+      min-height: 100vh;
     }
     h1 {
-      color:#1f2933;
+      color: #2563eb;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     h2 {
-      color:#2563eb;
+      color: #2563eb;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .container {
-      display:flex;
-      flex-wrap:wrap;
-      gap:20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
     .panel {
-      background:#ffffff;
-      padding:15px;
-      border-radius:10px;
-      box-shadow:0 8px 18px rgba(15,23,42,0.08);
-      flex:1 1 450px;
-      min-width:300px;
-      border:1px solid #e5e7eb;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.15);
+      flex: 1 1 450px;
+      min-width: 300px;
+      border: 1px solid #e5e7eb;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(15,23,42,0.2);
     }
     table {
-      width:100%;
-      border-collapse:collapse;
-      margin-top:10px;
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
     }
-    th,td {
-      border:1px solid #e5e7eb;
-      padding:6px;
-      font-size:13px;
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px;
+      font-size: 14px;
+      text-align: left;
     }
     th {
-      background:#f3f4f6;
-      color:#374151;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      color: #374151;
+      font-weight: 600;
     }
     input {
-      width:100%;
-      box-sizing:border-box;
-      background:#f9fafb;
-      border:1px solid #d1d5db;
-      color:#111827;
-      padding:4px 6px;
-      border-radius:4px;
+      width: 100%;
+      box-sizing: border-box;
+      background: #f9fafb;
+      border: 1px solid #d1d5db;
+      color: #111827;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
     input:focus {
-      outline:none;
-      border-color:#2563eb;
-      box-shadow:0 0 0 1px rgba(37,99,235,0.25);
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37,99,235,0.25);
     }
     button {
-      background:#2563eb;
-      color:#ffffff;
-      border:none;
-      padding:9px 16px;
-      border-radius:6px;
-      cursor:pointer;
-      margin-top:10px;
-      font-weight:600;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 20px auto;
+      display: block;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
     button:hover {
-      background:#1d4ed8;
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      transform: scale(1.05);
     }
     canvas {
-      background:#ffffff;
-      border-radius:8px;
+      background: #ffffff;
+      border-radius: 8px;
+      max-width: 100%;
+      height: auto !important;
+    }
+    .icon {
+      color: #2563eb;
+    }
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .panel {
+        flex: 1 1 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>24Spare Dashboard</h1>
+  <h1><i class="fas fa-chart-line icon"></i> 24Spare Sales Dashboard</h1>
 
-  <!-- UPDATE SECTION -->
+  <!-- CHARTS SECTION (Dashboard First) -->
   <div class="container">
+    <div class="panel">
+      <h2><i class="fas fa-pie-chart icon"></i> Sales by Category</h2>
+      <canvas id="catChart" height="220"></canvas>
+    </div>
+    <div class="panel">
+      <h2><i class="fas fa-chart-bar icon"></i> Agent Performance (Total Sales)</h2>
+      <canvas id="agentChart" height="220"></canvas>
+    </div>
+    <div class="panel">
+      <h2><i class="fas fa-bullseye icon"></i> Agent Target Achievement %</h2>
+      <canvas id="targetChart" height="220"></canvas>
+    </div>
+    <div class="panel">
+      <h2><i class="fas fa-warehouse icon"></i> Inventory Levels</h2>
+      <canvas id="invChart" height="220"></canvas>
+    </div>
+  </div>
+
+  <!-- UPDATE SECTION (Parameters at the End) -->
+  <div class="container" style="margin-top: 40px;">
     <!-- Sales by Category -->
     <div class="panel">
-      <h2>Sales by Category (₹)</h2>
+      <h2><i class="fas fa-tags icon"></i> Sales by Category (₹)</h2>
       <table id="tblSalesCat">
         <tr><th>Category</th><th>Sales Amount</th></tr>
         <tr><td>Engine Oil</td><td><input type="number" value="68400" /></td></tr>
@@ -97,7 +156,7 @@
 
     <!-- Agent Performance -->
     <div class="panel">
-      <h2>Agent Performance</h2>
+      <h2><i class="fas fa-users icon"></i> Agent Performance</h2>
       <table id="tblAgents">
         <tr>
           <th>Agent Name</th>
@@ -134,7 +193,7 @@
 
     <!-- Product Inventory -->
     <div class="panel">
-      <h2>Product Inventory Status</h2>
+      <h2><i class="fas fa-boxes icon"></i> Product Inventory Status</h2>
       <table id="tblInventory">
         <tr>
           <th>Product Name</th>
@@ -195,27 +254,7 @@
     </div>
   </div>
 
-  <button onclick="updateDashboard()">Update Dashboard</button>
-
-  <!-- CHARTS SECTION -->
-  <div class="container" style="margin-top:20px;">
-    <div class="panel">
-      <h2>Sales by Category</h2>
-      <canvas id="catChart" height="220"></canvas>
-    </div>
-    <div class="panel">
-      <h2>Agent Performance (Total Sales)</h2>
-      <canvas id="agentChart" height="220"></canvas>
-    </div>
-    <div class="panel">
-      <h2>Agent Target Achievement %</h2>
-      <canvas id="targetChart" height="220"></canvas>
-    </div>
-    <div class="panel">
-      <h2>Inventory Levels</h2>
-      <canvas id="invChart" height="220"></canvas>
-    </div>
-  </div>
+  <button onclick="updateDashboard()"><i class="fas fa-sync-alt"></i> Update Dashboard</button>
 
   <script>
     let catChart, agentChart, targetChart, invChart;
@@ -256,7 +295,7 @@
 
     function updateDashboard() {
       const cat = getSalesByCategory();
-      const ag  = getAgentData();
+      const ag = getAgentData();
       const inv = getInventoryData();
 
       // Sales by Category chart
@@ -267,10 +306,10 @@
           labels: cat.labels,
           datasets: [{
             data: cat.data,
-            backgroundColor: ['#2563eb','#10b981','#f97316','#ef4444']
+            backgroundColor: ['#2563eb', '#10b981', '#f97316', '#ef4444']
           }]
         },
-        options: { plugins:{legend:{labels:{color:'#374151'}}} }
+        options: { plugins: { legend: { labels: { color: '#374151' } } } }
       });
 
       // Agent Sales chart
@@ -287,10 +326,10 @@
         },
         options: {
           scales: {
-            x: { ticks:{color:'#4b5563'} },
-            y: { ticks:{color:'#4b5563'} }
+            x: { ticks: { color: '#4b5563' } },
+            y: { ticks: { color: '#4b5563' } }
           },
-          plugins:{legend:{labels:{color:'#374151'}}}
+          plugins: { legend: { labels: { color: '#374151' } } }
         }
       });
 
@@ -312,10 +351,10 @@
         },
         options: {
           scales: {
-            x: { ticks:{color:'#4b5563'} },
-            y: { ticks:{color:'#4b5563'} }
+            x: { ticks: { color: '#4b5563' } },
+            y: { ticks: { color: '#4b5563' } }
           },
-          plugins:{legend:{labels:{color:'#374151'}}}
+          plugins: { legend: { labels: { color: '#374151' } } }
         }
       });
 
@@ -333,10 +372,10 @@
         },
         options: {
           scales: {
-            x: { ticks:{color:'#4b5563', autoSkip:false, maxRotation:60, minRotation:30} },
-            y: { ticks:{color:'#4b5563'} }
+            x: { ticks: { color: '#4b5563', autoSkip: false, maxRotation: 60, minRotation: 30 } },
+            y: { ticks: { color: '#4b5563' } }
           },
-          plugins:{legend:{labels:{color:'#374151'}}}
+          plugins: { legend: { labels: { color: '#374151' } } }
         }
       });
     }
